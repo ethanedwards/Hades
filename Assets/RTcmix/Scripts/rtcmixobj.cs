@@ -11,7 +11,7 @@ public class rtcmixobj : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//Load text at beginning
-		score1 = scoreFile1.text;
+		//score1 = scoreFile1.text;
 
 		RTcmix = GameObject.Find ("RTcmixmain").GetComponent<rtcmixmain> ();
 		if (RTcmix == null) {

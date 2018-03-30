@@ -1,0 +1,9 @@
+fftindex = index
+
+for (i = 0; i < nffts; i += 1) {
+	tfft = freqs[fftindex]
+	WAVETABLE(0, windowdur, amp*ampenv, tfft[i])
+}
+
+MAXBANG(windowslide)
+

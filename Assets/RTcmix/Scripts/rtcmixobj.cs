@@ -33,9 +33,9 @@ public class rtcmixobj : MonoBehaviour {
 {
 		yield return new WaitForSeconds(time);
 
-		//RTcmix.SendScore ("WAVETABLE(0, 3.5, 20000, 440.0)", objno);
+		RTcmix.SendScore ("WAVETABLE(0, 3.5, 20000, 440.0)", objno);
 		//Scorefile loaded from the "Resources" folder
-		RTcmix.SendScoreFile ("RTcmixtest", objno);
+		//RTcmix.SendScoreFile ("RTcmixtest", objno);
 		//Scorefile loaded from text asset attached to script
 		//RTcmix.SendScore(score1, objno);
 		//RTcmix.SendScoreAsset (scoreFile, objno);

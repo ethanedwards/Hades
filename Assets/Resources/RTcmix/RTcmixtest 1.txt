@@ -1,0 +1,51 @@
+// ok, so this has bogus 'fft data' to show how it would work
+// the freqs[][] array has 10-point fft data, and there are
+// 5 frames-worth.  You move through the frames with the slider
+// (0 - 4) and each frame spawns a WAVETABLE for each of the
+// fft frequency 'points' in the freqs[][] array.
+
+
+reset(44100)
+
+
+windowdur = 0.05 // the duration of each FFT frame
+
+windowslide = windowdur/7 // this is the amount of overlap or
+	// 'smearing' between windows.  Right now the next window
+	// will start 1/7 into the current window, so you have
+	// 7 windows overlapping.  I did this 'by ear' to get
+	// a smooth result
+
+amp = 1000
+ampenv = maketable("window", 1000, "hanning")
+
+nfftbins = 10
+nffts = 5
+
+
+freqs = {} {}
+
+// just generate a bunch of random "fft" data
+freqs[0] = { irand(100, 2000), irand(100, 2000), irand(100, 2000), 
+	irand(100, 2000), irand(100, 2000), irand(100, 2000), 
+	irand(100, 2000), irand(100, 2000), irand(100, 2000), 
+	irand(100, 2000) }
+freqs[1] = { irand(100, 2000), irand(100, 2000), irand(100, 2000), 
+	irand(100, 2000), irand(100, 2000), irand(100, 2000), 
+	irand(100, 2000), irand(100, 2000), irand(100, 2000), 
+	irand(100, 2000) }
+freqs[2] = { irand(100, 2000), irand(100, 2000), irand(100, 2000), 
+	irand(100, 2000), irand(100, 2000), irand(100, 2000), 
+	irand(100, 2000), irand(100, 2000), irand(100, 2000), 
+	irand(100, 2000) }
+freqs[3] = { irand(100, 2000), irand(100, 2000), irand(100, 2000), 
+	irand(100, 2000), irand(100, 2000), irand(100, 2000), 
+	irand(100, 2000), irand(100, 2000), irand(100, 2000), 
+	irand(100, 2000) }
+freqs[4] = { irand(100, 2000), irand(100, 2000), irand(100, 2000), 
+	irand(100, 2000), irand(100, 2000), irand(100, 2000), 
+	irand(100, 2000), irand(100, 2000), irand(100, 2000), 
+	irand(100, 2000) }
+
+
+MAXBANG(1.0)

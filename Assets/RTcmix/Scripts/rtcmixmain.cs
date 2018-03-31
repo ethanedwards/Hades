@@ -11,8 +11,7 @@ using System.Runtime.InteropServices;
 // these are the RTcmix functions needed to run and control RTcmix
 public static class DLL
 {
-
-	#if UNITY_IOS
+	/*
 	[DllImport ("__Internal")]
 	public static extern int RTcmix_init(int objno);
 
@@ -45,7 +44,7 @@ public static class DLL
 
 	[DllImport ("__Internal")]
 	unsafe public static extern int check_context();
-	#else
+	*/
 
 	[DllImport ("librtcmix_embedded")]
 	public static extern int RTcmix_init(int objno);
@@ -80,8 +79,6 @@ public static class DLL
 	[DllImport ("librtcmix_embedded")]
 	unsafe public static extern int check_context();
 
-
-	#endif
 }
 
 public class rtcmixmain : MonoBehaviour {

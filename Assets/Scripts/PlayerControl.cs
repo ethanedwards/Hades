@@ -7,12 +7,15 @@ namespace UnityEngine.XR.iOS
 	public class PlayerControl : MonoBehaviour {
 
 		public GameObject sceneRoot;
-		public float maxRayDistance = 30.0f;
-		public LayerMask collisionLayer = 1 << 10; 
+		public float maxRayDistance = 10.0f;
+		public LayerMask collisionLayer = 1 << 10;
+		bool narrating;
+		bool placed;
 
 		// Use this for initialization
 		void Start () {
-			
+			narrating = false;
+			placed = false;
 		}
 
 		bool HitTestWithResultType (ARPoint point, ARHitTestResultType resultTypes)
@@ -20,13 +23,16 @@ namespace UnityEngine.XR.iOS
 			List<ARHitTestResult> hitResults = UnityARSessionNativeInterface.GetARSessionNativeInterface ().HitTest (point, resultTypes);
 			if (hitResults.Count > 0) {
 				foreach (var hitResult in hitResults) {
+					
 					Debug.Log ("Got hit!");
-					sceneRoot.transform.position = UnityARMatrixOps.GetPosition (hitResult.worldTransform);
-					sceneRoot.transform.rotation = UnityARMatrixOps.GetRotation (hitResult.worldTransform);
-					sceneRoot.SetActive (true);
-					Debug.Log ("placed");
-					//Debug.Log (string.Format ("x:{0:0.######} y:{1:0.######} z:{2:0.######}", m_HitTransform.position.x, m_HitTransform.position.y, m_HitTransform.position.z));
-					return true;
+					if (!placed) {
+						sceneRoot.transform.position = UnityARMatrixOps.GetPosition (hitResult.worldTransform);
+						sceneRoot.transform.rotation = UnityARMatrixOps.GetRotation (hitResult.worldTransform);
+						sceneRoot.SetActive (true);
+						Debug.Log ("placed");
+						placed = true;
+						return true;
+					}
 				}
 			}
 			return false;
@@ -45,15 +51,12 @@ namespace UnityEngine.XR.iOS
 					//we're going to get the position from the contact point
 					//m_HitTransform.position = hit.point;
 					Debug.Log (hit.transform.name);
-					if (hit.transform.tag == "People") {
+					if (hit.transform.tag == "Person"&&!narrating) {
+						Debug.Log ("narrate!");
 						hit.transform.GetComponent<Narrate> ().Play ();
-					} else {
-						Vector3 newPos = hit.transform.position;
-						newPos.y = newPos.y;
-						sceneRoot.transform.position = newPos;
-						sceneRoot.SetActive (true);
-						Debug.Log ("placed");
-					}
+						NarratePause (hit.transform.GetComponent<AudioSource> ().clip.length);
+					} 
+						
 					//Debug.Log (string.Format ("x:{0:0.######} y:{1:0.######} z:{2:0.######}", m_HitTransform.position.x, m_HitTransform.position.y, m_HitTransform.position.z));
 
 					//and the rotation from the transform of the plane collider
@@ -88,6 +91,13 @@ namespace UnityEngine.XR.iOS
 
 
 			}
+		}
+
+		IEnumerator NarratePause(float length)
+		{
+			narrating = true;
+			yield return new WaitForSeconds(length);
+			narrating = false;
 		}
 	}
 }

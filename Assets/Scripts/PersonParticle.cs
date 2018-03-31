@@ -10,10 +10,16 @@ public class PersonParticle : MonoBehaviour {
 	private bool frameUpdated = false;
 	private ParticleSystem currentPS;
 	private ParticleSystem.Particle [] particles;
+	private Mesh mesh;
+
+	private Vector3[] vertices;
 	// Use this for initialization
 	void Start () {
 		currentPS = Instantiate (pointCloudParticlePrefab);
 		GetComponent<SkinnedMeshRenderer> ().sharedMaterial.color = new Color (0, 0, 0, 0);
+		mesh = new Mesh ();//GetComponent<SkinnedMeshRenderer> ().sharedMesh;
+		GetComponent<SkinnedMeshRenderer> ().BakeMesh (mesh);
+		vertices = mesh.vertices;
 	}
 
 
@@ -22,9 +28,8 @@ public class PersonParticle : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Mesh mesh = new Mesh ();//GetComponent<SkinnedMeshRenderer> ().sharedMesh;
 		GetComponent<SkinnedMeshRenderer> ().BakeMesh (mesh);
-		Vector3[] vertices = mesh.vertices;
+		vertices = mesh.vertices;
 		int i = 0;
 		//while (i < vertices.Length) {
 		//	vertices[i] += Vector3.up * Time.deltaTime;

@@ -1,4 +1,4 @@
-﻿Shader "Custom/ARMultipass"
+﻿Shader "Custom/ARMultipassEntrance" {
 {
 	Properties
 	{
@@ -9,8 +9,6 @@
 		_YPos ("_YPos", Range(0.0, 1)) = 1.0
 		_XPos ("_XPos", Range(0.0, 1)) = 1.0
 		_Random1 ("_Random1", Range(0.0, 1)) = 1.0
-		_ModFade ("_ModFade", Range(0.0, 1)) = 0.0
-		_WhiteFade ("_WhiteFade", Range(0.0, 1)) = 0.0
 	}
 	SubShader
 	{
@@ -29,8 +27,6 @@
 
 			float4x4 _DisplayTransform;
 			float _Random1;
-			float _ModFade;
-			float _WhiteFade;
 
 			struct Vertex
 			{
@@ -173,10 +169,7 @@
 				bw.b = res.b;
 
 
-				//return (3*bw+col)/4;
-				fixed4 combo = col*(1.0-_ModFade)+bw*_ModFade;
-				return combo;
-
+				return col;
 			}
 			ENDCG
 		}

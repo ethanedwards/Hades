@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 114499380039968090}
   m_Layer: 10
   m_Name: FirstMan
-  m_TagString: Untagged
+  m_TagString: Person
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -482,8 +482,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1686259171919698}
   m_LocalRotation: {x: -0, y: -0.7077915, z: -0, w: 0.70642143}
-  m_LocalPosition: {x: 1.76, y: 0, z: -7.77}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalPosition: {x: -2.84, y: -1, z: 2.81}
+  m_LocalScale: {x: 0.7000002, y: 0.7, z: 0.7000002}
   m_Children:
   - {fileID: 4074123828535786}
   - {fileID: 4188175449708286}
@@ -816,7 +816,7 @@ Animator:
   m_GameObject: {fileID: 1686259171919698}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 0bf37dc7372c57146bfc553d666ef609, type: 3}
-  m_Controller: {fileID: 9100000, guid: 9c99e97802fca454b825aa2adeaa486c, type: 2}
+  m_Controller: {fileID: 9100000, guid: ab1b9b4728e374cebb7bc2f89784d712, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1

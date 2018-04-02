@@ -11,7 +11,7 @@ public class PersonParticle : MonoBehaviour {
 	private ParticleSystem currentPS;
 	private ParticleSystem.Particle [] particles;
 	private Mesh mesh;
-
+	private Transform trans;
 	private Vector3[] vertices;
 	// Use this for initialization
 	void Start () {
@@ -20,6 +20,7 @@ public class PersonParticle : MonoBehaviour {
 		mesh = new Mesh ();//GetComponent<SkinnedMeshRenderer> ().sharedMesh;
 		GetComponent<SkinnedMeshRenderer> ().BakeMesh (mesh);
 		vertices = mesh.vertices;
+		trans = this.transform;
 	}
 
 
@@ -40,7 +41,7 @@ public class PersonParticle : MonoBehaviour {
 		int index = 0;
 		foreach (Vector3 currentPoint in vertices){
 			Vector3 offset = new Vector3 (Random.value, Random.value, Random.value);//new Vector3 (Mathf.PerlinNoise (currentPoint.x, Time.time), Mathf.PerlinNoise (currentPoint.y, Time.time), Mathf.PerlinNoise (currentPoint.z, Time.time));
-			particles [index].position = Quaternion.Euler(0, 270, 0)*currentPoint + transform.position;// + offset/20.0f;
+			particles [index].position = trans.rotation*currentPoint + transform.position + offset/200.0f;
 			particles [index].startColor = new Color (1.0f, 1.0f, 1.0f);
 			particles [index].startSize = particleSize;
 			index++;

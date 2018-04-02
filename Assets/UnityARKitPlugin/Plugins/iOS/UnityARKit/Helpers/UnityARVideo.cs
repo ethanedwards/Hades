@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -14,6 +15,8 @@ namespace UnityEngine.XR.iOS
         private Texture2D _videoTextureY;
         private Texture2D _videoTextureCbCr;
 		private Matrix4x4 _displayTransform;
+
+		float ModFade;
 
 		private bool bCommandBufferInitialized;
 
@@ -86,6 +89,7 @@ namespace UnityEngine.XR.iOS
             _videoTextureCbCr.UpdateExternalTexture(handles.textureCbCr);
 
 			m_ClearMaterial.SetMatrix("_DisplayTransform", _displayTransform);
+			EthanSet();
         }
 #else
 
@@ -110,8 +114,31 @@ namespace UnityEngine.XR.iOS
 			m_ClearMaterial.SetTexture("_textureCbCr", _videoTextureCbCr);
 
 			m_ClearMaterial.SetMatrix("_DisplayTransform", _displayTransform);
+
+			//Added by Ethan
+			EthanSet();
 		}
+
+
+
  
 #endif
+
+		void EthanSet(){
+			m_ClearMaterial.SetFloat ("_Random1", Random.value);
+			m_ClearMaterial.SetFloat ("_ModFade", ModFade);
+		}
+
+		public void FadeBW(){
+			StartCoroutine (FadeUp ());
+		}
+
+
+		IEnumerator FadeUp() {
+			for (float f = 0f; f < 1; f += 0.005f) {
+				ModFade = f;
+				yield return null;
+			}
+		}
     }
 }

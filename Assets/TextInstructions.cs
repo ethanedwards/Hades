@@ -24,8 +24,13 @@ public class TextInstructions : MonoBehaviour {
 		StartCoroutine (OpenSpace ());
 	}
 
+	public void Elysium(){
+		StartCoroutine (BeginElysium ());
+	}
+
 	IEnumerator Beginning()
 	{
+		Debug.Log("begin");
 		text.text = "Look Around with Your Camera";
 		yield return new WaitForSeconds(1.0f);
 		StartCoroutine (FadeUp());
@@ -39,14 +44,26 @@ public class TextInstructions : MonoBehaviour {
 
 	IEnumerator Transition()
 	{
+		Debug.Log("trans");
 		StartCoroutine (FadeDown());
 		yield return new WaitForSeconds(0.7f);
 		text.text = "Tap the Branch to Pick it Up";
 		StartCoroutine (FadeUp());
 	}
 
+	IEnumerator BeginElysium()
+	{
+		StartCoroutine (FadeDown());
+		yield return new WaitForSeconds(4.0f);
+		text.text = "Tap the Shades to Interact";
+		StartCoroutine (FadeUp());
+		yield return new WaitForSeconds(4.0f);
+		StartCoroutine (FadeDown());
+	}
+
 	IEnumerator OpenSpace()
 	{
+		Debug.Log("open");
 		StartCoroutine (FadeDown());
 		yield return new WaitForSeconds(0.7f);
 		text.text = "Find an Open Space to Begin";
@@ -59,7 +76,7 @@ public class TextInstructions : MonoBehaviour {
 	}
 
 	IEnumerator FadeDown() {
-		for (float f = 1f; f > 0; f -= 0.1f) {
+		for (float f = 1f; f > -0.1; f -= 0.1f) {
 			Color c = text.color;
 			c.a = f;
 			text.color = c;

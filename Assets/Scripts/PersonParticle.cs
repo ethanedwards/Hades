@@ -54,4 +54,8 @@ public class PersonParticle : MonoBehaviour {
 		//mesh.vertices = vertices;
 		//mesh.RecalculateBounds();
 	}
+
+	public void Disable(){
+		Destroy (currentPS);
+	}
 }

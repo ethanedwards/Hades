@@ -38,11 +38,13 @@ namespace UnityEngine.XR.iOS
 					
 					Debug.Log ("Got hit!");
 					if (!placed) {
-						sceneRoot.transform.position = UnityARMatrixOps.GetPosition (hitResult.worldTransform);
+						//sceneRoot.transform.position = UnityARMatrixOps.GetPosition (hitResult.worldTransform);
 						//sceneRoot.transform.rotation = UnityARMatrixOps.GetRotation (hitResult.worldTransform);
-						sceneRoot.SetActive (true);
+						//sceneRoot.SetActive (true);
 						Debug.Log ("placed");
-						placed = true;
+						TransitionEntrance (UnityARMatrixOps.GetPosition (hitResult.worldTransform));
+
+						//placed = true;
 						return true;
 					}
 				}
@@ -54,7 +56,7 @@ namespace UnityEngine.XR.iOS
 		void Update () {
 			if (Entrance) {
 
-				if (Time.time > 2.5f&&!spawned) {
+				if (Time.time > 4.5f&&!spawned) {
 					sceneRoot.transform.position = transform.position - Camera.main.transform.forward;
 					sceneRoot.SetActive (true);
 					spawned = true;
@@ -62,30 +64,24 @@ namespace UnityEngine.XR.iOS
 				}
 
 				if (pickedUp && !placed) {
-
-					sceneRoot.transform.position = transform.position + Camera.main.transform.forward;
+					//Flying around
+					Vector3 goal = transform.position + Camera.main.transform.forward-Camera.main.transform.up/4;
+					Vector3 start = sceneRoot.transform.position;
+					if (Vector3.Distance (start, goal) > 0.1f) {
+						sceneRoot.transform.position = start + (goal - start).normalized / 40.0f;
+					}
 
 					if (Input.GetMouseButtonDown (0)) {
 						Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 						RaycastHit hit;
 						if (Physics.Raycast (ray, out hit, maxRayDistance, collisionLayer)) {
-							Debug.Log ("PLACED");
-							center = hit.transform.position;
-							sceneRoot.transform.position = center;
-							pickedUp = false;
-							placed = true;
-							GameObject.Find ("GeneratePlanes").SetActive (false);
-							crowd.transform.position = center;
-							crowd.SetActive (true);
+							TransitionEntrance (hit.transform.position);
 
-							StartCoroutine (FadeUp (4.0f));
-							StartCoroutine (FadeDown (7.0f));
-							StartCoroutine(BeginElysium ());
 						}
 					}
 
 
-					/*
+
 					if (Input.GetMouseButtonDown (0)) {
 						Debug.Log ("input");
 						ARPoint point = new ARPoint {
@@ -111,16 +107,17 @@ namespace UnityEngine.XR.iOS
 							}
 						}
 					}
-					*/
+
 				}
 
 
-				if (Vector3.Distance (transform.position, sceneRoot.transform.position) < 1.0 && !approached) {
-					Debug.Log ("next");
+
+				//if (Vector3.Distance (transform.position, sceneRoot.transform.position) < 1.0 && !approached) {
+				if(sceneRoot.GetComponent<Renderer>().isVisible&&!approached){
 					text.GetComponent<TextInstructions> ().Next ();
 					approached = true;
 				}
-				if (Input.GetMouseButtonDown (0) && pickedUp == false && approached) {
+				if (Input.GetMouseButtonDown (0) && pickedUp == false && approached && !placed) {
 					Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 					RaycastHit hit;
 					if (Physics.Raycast (ray, out hit, maxRayDistance, collisionLayer)) {
@@ -196,11 +193,18 @@ namespace UnityEngine.XR.iOS
 
 		IEnumerator BeginElysium()
 		{
-			yield return new WaitForSeconds(6.0f);
+			yield return new WaitForSeconds(8.0f);
+			Debug.Log ("Yo ELysium began");
 			Entrance = false;
+			sceneRoot.SetActive (false);
 			crowd.SetActive (false);
+			PersonParticle[] parts = crowd.GetComponentsInChildren<PersonParticle> ();
+			foreach (PersonParticle part in parts) {
+				part.Disable ();
+			}
 			Elysium.transform.position = center;
 			Elysium.SetActive (true);
+			text.GetComponent<TextInstructions> ().Elysium ();
 		}
 
 		IEnumerator NarratePause(float length)
@@ -228,6 +232,24 @@ namespace UnityEngine.XR.iOS
 				fadeImage.color = c;
 				yield return null;
 			}
+		}
+
+		void TransitionEntrance(Vector3 pos){
+
+			Debug.Log ("PLACED");
+			Debug.Log (pos);
+			center = pos;
+			sceneRoot.transform.position = center;
+			pickedUp = false;
+			placed = true;
+			GameObject.Find ("GeneratePlanes").SetActive (false);
+			crowd.transform.position = center;
+
+			crowd.SetActive (true);
+
+			StartCoroutine(BeginElysium ());
+			StartCoroutine (FadeUp (4.0f));
+			StartCoroutine (FadeDown (9.0f));
 		}
 	}
 }

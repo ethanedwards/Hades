@@ -47,7 +47,7 @@ public class TextInstructions : MonoBehaviour {
 		Debug.Log("trans");
 		StartCoroutine (FadeDown());
 		yield return new WaitForSeconds(0.7f);
-		text.text = "Tap the Branch to Pick it Up";
+		text.text = "Tap the Screen on the Branch to Pick it Up";
 		StartCoroutine (FadeUp());
 	}
 

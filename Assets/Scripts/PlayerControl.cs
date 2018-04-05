@@ -20,6 +20,7 @@ namespace UnityEngine.XR.iOS
 		bool spawned;
 		public bool Entrance = false;
 		public GameObject text;
+		public GameObject RTcmix;
 		public Image fadeImage;
 
 		// Use this for initialization
@@ -37,6 +38,7 @@ namespace UnityEngine.XR.iOS
 				foreach (var hitResult in hitResults) {
 					
 					Debug.Log ("Got hit!");
+					Debug.Log("Hitpos " + UnityARMatrixOps.GetPosition (hitResult.worldTransform));
 					if (!placed) {
 						//sceneRoot.transform.position = UnityARMatrixOps.GetPosition (hitResult.worldTransform);
 						//sceneRoot.transform.rotation = UnityARMatrixOps.GetRotation (hitResult.worldTransform);
@@ -75,7 +77,10 @@ namespace UnityEngine.XR.iOS
 						Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 						RaycastHit hit;
 						if (Physics.Raycast (ray, out hit, maxRayDistance, collisionLayer)) {
+							Debug.Log("position " + hit.transform.position);
+							#if UNITY_EDITOR
 							TransitionEntrance (hit.transform.position);
+							#endif
 
 						}
 					}
@@ -84,9 +89,12 @@ namespace UnityEngine.XR.iOS
 
 					if (Input.GetMouseButtonDown (0)) {
 						Debug.Log ("input");
+						var touch = Input.GetTouch(0);
+
+						var screenPosition = Camera.main.ScreenToViewportPoint(touch.position);
 						ARPoint point = new ARPoint {
-							x = Camera.main.pixelWidth / 2,
-							y = Camera.main.pixelHeight / 2
+							x = screenPosition.x,
+							y = screenPosition.y
 						};
 
 						// prioritize reults types
@@ -152,7 +160,7 @@ namespace UnityEngine.XR.iOS
 					if (hit.transform.tag == "Person"&&!narrating) {
 						Debug.Log ("narrate!");
 						hit.transform.GetComponent<Narrate> ().Play ();
-						NarratePause (hit.transform.GetComponent<AudioSource> ().clip.length);
+						StartCoroutine(NarratePause (hit.transform.GetComponent<AudioSource> ().clip.length));
 					} 
 						
 					//Debug.Log (string.Format ("x:{0:0.######} y:{1:0.######} z:{2:0.######}", m_HitTransform.position.x, m_HitTransform.position.y, m_HitTransform.position.z));
@@ -196,7 +204,8 @@ namespace UnityEngine.XR.iOS
 			yield return new WaitForSeconds(8.0f);
 			Debug.Log ("Yo ELysium began");
 			Entrance = false;
-			sceneRoot.SetActive (false);
+			//sceneRoot.SetActive (false);
+			RTcmix.SetActive(true);
 			crowd.SetActive (false);
 			PersonParticle[] parts = crowd.GetComponentsInChildren<PersonParticle> ();
 			foreach (PersonParticle part in parts) {
@@ -209,8 +218,10 @@ namespace UnityEngine.XR.iOS
 
 		IEnumerator NarratePause(float length)
 		{
+			Debug.Log ("length" + length);
 			narrating = true;
 			yield return new WaitForSeconds(length);
+			Debug.Log ("narrated");
 			narrating = false;
 		}
 

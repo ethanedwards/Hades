@@ -58,8 +58,8 @@ namespace UnityEngine.XR.iOS
 		void Update () {
 			if (Entrance) {
 
-				if (Time.time > 4.5f&&!spawned) {
-					sceneRoot.transform.position = transform.position - Camera.main.transform.forward;
+				if (Time.timeSinceLevelLoad > 9.5f&&!spawned) {
+					sceneRoot.transform.position = transform.position - Camera.main.transform.forward*4;
 					sceneRoot.SetActive (true);
 					spawned = true;
 
@@ -121,7 +121,7 @@ namespace UnityEngine.XR.iOS
 
 
 				//if (Vector3.Distance (transform.position, sceneRoot.transform.position) < 1.0 && !approached) {
-				if(sceneRoot.GetComponent<Renderer>().isVisible&&!approached){
+				if(sceneRoot.GetComponent<Renderer>().isVisible&&!approached&&Time.timeSinceLevelLoad>15.0f){
 					text.GetComponent<TextInstructions> ().Next ();
 					approached = true;
 				}
@@ -248,18 +248,22 @@ namespace UnityEngine.XR.iOS
 		void TransitionEntrance(Vector3 pos){
 
 			Debug.Log ("PLACED");
-			Debug.Log (pos);
+			Debug.Log ("pos " + pos);
 			center = pos;
 			sceneRoot.transform.position = center;
 			pickedUp = false;
 			placed = true;
-			GameObject.Find ("GeneratePlanes").SetActive (false);
+			Debug.Log ("Centered?");
+			//GameObject.Find ("GeneratePlanes").SetActive (false);
+			Debug.Log ("crowd");
 			crowd.transform.position = center;
 
 			crowd.SetActive (true);
 
 			StartCoroutine(BeginElysium ());
+			Debug.Log ("fade up");
 			StartCoroutine (FadeUp (4.0f));
+			Debug.Log ("fade down");
 			StartCoroutine (FadeDown (9.0f));
 		}
 	}

@@ -8,6 +8,9 @@ public class TextInstructions : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		text = GetComponent<Text> ();
+		Color c = text.color;
+		c.a = 0;
+		text.color = c;
 		StartCoroutine (Beginning ());
 	}
 	
@@ -32,11 +35,11 @@ public class TextInstructions : MonoBehaviour {
 	{
 		Debug.Log("begin");
 		text.text = "Look Around with Your Camera";
-		yield return new WaitForSeconds(1.0f);
+		yield return new WaitForSeconds(3.0f);
 		StartCoroutine (FadeUp());
-		yield return new WaitForSeconds(2.5f);
+		yield return new WaitForSeconds(6.5f);
 		StartCoroutine (FadeDown());
-		yield return new WaitForSeconds(2.0f);
+		yield return new WaitForSeconds(4.0f);
 		text.text = "Find the Branch and Approach It";
 		StartCoroutine (FadeUp());
 	}

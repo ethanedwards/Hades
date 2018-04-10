@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DroneMusic : MonoBehaviour {
+public class TreeSound : MonoBehaviour {
 	public int objno;
 	public TextAsset scoreFile1;
 	private string score1;
 	private rtcmixmain RTcmix;
+	private Transform cam;
+	private float pitch;
 
 	// Use this for initialization
 	void Start () {
 		//Load text at beginning
 		//score1 = scoreFile1.text;
 
+		pitch = Random.Range (100, 450);
+
 		RTcmix = GameObject.Find ("RTcmixmain").GetComponent<rtcmixmain> ();
+		cam = Camera.main.transform;
 		if (RTcmix == null) {
 			Debug.Log ("Error! No RTcmixmain prefab object in scene");
 		} else {
@@ -33,9 +38,10 @@ public class DroneMusic : MonoBehaviour {
 	{
 		yield return new WaitForSeconds(time);
 
-		//RTcmix.SendScore ("WAVETABLE(0, 3.5, 20000, 440.0)", objno);
+		RTcmix.SendScoreFile ("TreeSetup", objno);
+		Debug.Log ("tree setup");
 		//Scorefile loaded from the "Resources" folder
-		RTcmix.SendScoreFile ("DroneSetup", objno);
+		//RTcmix.SendScoreFile ("RTcmixtest", objno);
 		//Scorefile loaded from text asset attached to script
 		//RTcmix.SendScore(score1, objno);
 		//RTcmix.SendScoreAsset (scoreFile, objno);
@@ -43,15 +49,19 @@ public class DroneMusic : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
+		Vector3 dist = cam.position - transform.position;
+		RTcmix.setpfieldRTcmix (0, dist.x, objno);
+		RTcmix.setpfieldRTcmix (1, dist.y, objno);
+		RTcmix.setpfieldRTcmix (2, dist.z, objno);
 	}
 
 	void OnAudioFilterRead(float[] data, int channels) {
 		RTcmix.runRTcmix (data, objno, 0);
 
 		if (RTcmix.checkbangRTcmix (objno) == 1) {
-			Debug.Log ("drone bang");
-			RTcmix.SendScoreFile ("UpdateDrones", objno);
+			RTcmix.SendScore ("treepitch = " + pitch, objno);
+			Debug.Log ("tree bang");
+			RTcmix.SendScoreFile ("UpdateTrees", objno);
 		}
 		RTcmix.printRTcmix (0);
 	}

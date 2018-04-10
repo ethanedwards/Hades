@@ -2,6 +2,7 @@
 {
 	Properties
 	{
+		_Color ("Color", Color) = (1,1,1,1)
     	_textureY ("TextureY", 2D) = "white" {}
         _textureCbCr ("TextureCbCr", 2D) = "black" {}
         _MainTex ("Texture", 2D) = "white" {}
@@ -27,6 +28,7 @@
 			
 			#include "UnityCG.cginc"
 
+			fixed4 _Color;
 			float4x4 _DisplayTransform;
 			float _Random1;
 			float _ModFade;
@@ -141,6 +143,7 @@
 
 
 
+
                 float avg = (col.r+col.g+col.b)/3.0;
 				float rA = avg-col.r;
 				float gA = avg-col.g;
@@ -172,6 +175,8 @@
 				bw.g = res.g;
 				bw.b = res.b;
 
+				//tint
+                bw = bw * _Color;
 
 				//return (3*bw+col)/4;
 				fixed4 combo = col*(1.0-_ModFade)+bw*_ModFade;

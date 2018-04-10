@@ -2,6 +2,7 @@
 {
 	Properties
 	{
+		_Color ("Color", Color) = (1,1,1,1)
     	_textureY ("TextureY", 2D) = "white" {}
         _textureCbCr ("TextureCbCr", 2D) = "black" {}
         _MainTex ("Texture", 2D) = "white" {}
@@ -27,6 +28,7 @@
 
 			float4x4 _DisplayTransform;
 			float _Random1;
+			fixed4 _Color;
 
 			struct Vertex
 			{
@@ -134,7 +136,7 @@
 					);
 
                 fixed4 col = mul(ycbcrToRGBTransform, ycbcr);
-
+                col = col * _Color;
 
 
                 float avg = (col.r+col.g+col.b)/3.0;

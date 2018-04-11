@@ -11,6 +11,10 @@ namespace UnityEngine.XR.iOS
 		Vector3 center;
 		public GameObject crowd;
 		public GameObject Elysium;
+		public GameObject blue;
+		public GameObject red;
+		public GameObject yellow;
+		public GameObject white;
 		public float maxRayDistance = 10.0f;
 		public LayerMask collisionLayer = 1 << 10;
 		bool narrating;
@@ -18,6 +22,8 @@ namespace UnityEngine.XR.iOS
 		bool approached;
 		bool pickedUp;
 		bool spawned;
+		int talkedTo;
+		int level;
 		public bool Entrance = false;
 		public GameObject text;
 		public GameObject RTcmix;
@@ -29,6 +35,8 @@ namespace UnityEngine.XR.iOS
 			placed = false;
 			approached = false;
 			spawned = false;
+			talkedTo = 0;
+			level = 0;
 		}
 
 		bool HitTestWithResultType (ARPoint point, ARHitTestResultType resultTypes)
@@ -161,6 +169,8 @@ namespace UnityEngine.XR.iOS
 						Debug.Log ("narrate!");
 						hit.transform.GetComponent<Narrate> ().Play ();
 						StartCoroutine(NarratePause (hit.transform.GetComponent<AudioSource> ().clip.length));
+						talkedTo++;
+						Debug.Log ("talkedTo: " + talkedTo);
 					} 
 						
 					//Debug.Log (string.Format ("x:{0:0.######} y:{1:0.######} z:{2:0.######}", m_HitTransform.position.x, m_HitTransform.position.y, m_HitTransform.position.z));
@@ -197,6 +207,49 @@ namespace UnityEngine.XR.iOS
 
 
 			}
+
+		}
+
+		void ChangeLevel(){
+			StartCoroutine (FadeChangeLevel ());
+		}
+
+		IEnumerator FadeChangeLevel()
+		{
+			talkedTo = 0;
+			StartCoroutine(FadeUp(1.0f));
+			yield return new WaitForSeconds(5.5f);
+
+			Debug.Log ("Switch: " + level);
+			switch(level){
+			case 0:
+				Elysium.SetActive (false);
+				blue.SetActive (true);
+				break;
+
+			case 1:
+				blue.SetActive (false);
+				red.SetActive (true);
+				break;
+			case 2:
+				red.SetActive (false);
+				yellow.SetActive (true);
+				break;
+			case 3:
+				yellow.SetActive (false);
+				white.SetActive (true);
+				break;
+			default:
+				break;
+			}
+
+
+
+			level++;
+			//Increase level beforehand because green change comes first
+			GetComponent<UnityARVideo> ().ChangeColor (level);
+			StartCoroutine (FadeDown (0.0f));
+
 		}
 
 		IEnumerator BeginElysium()
@@ -214,6 +267,7 @@ namespace UnityEngine.XR.iOS
 			Elysium.transform.position = center;
 			Elysium.SetActive (true);
 			text.GetComponent<TextInstructions> ().Elysium ();
+			GetComponent<UnityARVideo> ().ChangeColor (level);
 		}
 
 		IEnumerator NarratePause(float length)
@@ -223,6 +277,12 @@ namespace UnityEngine.XR.iOS
 			yield return new WaitForSeconds(length);
 			Debug.Log ("narrated");
 			narrating = false;
+			if (talkedTo >= 4&& !narrating) {
+				Debug.Log ("Changed");
+				ChangeLevel ();
+
+			}
+
 		}
 
 		IEnumerator FadeDown(float wait) {

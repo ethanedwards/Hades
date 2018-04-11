@@ -25,6 +25,8 @@ public class Narrate : MonoBehaviour {
 		ChangeVolume(-.1f, 0.35f);
 		yield return new WaitForSeconds(this.GetComponent<AudioSource>().clip.length);
 		ChangeVolume(0.1f, 1.0f);
+		DisableChildren ();
+		this.tag = "Finished";
 	}
 
 	private void ChangeVolume(float step, float vol){
@@ -35,5 +37,10 @@ public class Narrate : MonoBehaviour {
 			obj.GetComponent<CrossFader> ().ChangeVol (step, vol);
 		}
 
+	}
+
+	private void DisableChildren(){
+		PersonParticle part = GetComponentInChildren<PersonParticle> ();
+		part.Disable ();
 	}
 }

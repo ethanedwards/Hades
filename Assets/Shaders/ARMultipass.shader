@@ -2,7 +2,7 @@
 {
 	Properties
 	{
-		_Color ("Color", Color) = (1,1,1,1)
+		_Color ("_Color", Color) = (1,1,1,1)
     	_textureY ("TextureY", 2D) = "white" {}
         _textureCbCr ("TextureCbCr", 2D) = "black" {}
         _MainTex ("Texture", 2D) = "white" {}

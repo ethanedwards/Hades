@@ -69,7 +69,7 @@ Properties
                 col.a = _Transparency;
                 col.a = 1.0-2*abs(0.5-i.uv.x)+1.0-2*abs(0.5-i.uv.y);
                 float2 seed;
-                float bob = _Distance;//_Time*_Distance;
+                float bob = _Distance+_Time/8.0;
                 seed = float2(i.uv.x+bob, i.uv.y+bob);
                 col.a = snoise(seed);
                 //clip(col.r - _CutoutThresh);

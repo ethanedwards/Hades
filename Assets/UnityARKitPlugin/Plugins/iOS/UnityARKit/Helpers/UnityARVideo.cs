@@ -24,6 +24,9 @@ namespace UnityEngine.XR.iOS
 		{
 			UnityARSessionNativeInterface.ARFrameUpdatedEvent += UpdateFrame;
 			bCommandBufferInitialized = false;
+			Color col = Color.HSVToRGB(0f, 0f, 255/255.0f);
+			Debug.Log ("col " + col);
+			m_ClearMaterial.SetColor("_Color", col);
 		}
 
 		void UpdateFrame(UnityARCamera cam)
@@ -127,6 +130,31 @@ namespace UnityEngine.XR.iOS
 		void EthanSet(){
 			m_ClearMaterial.SetFloat ("_Random1", Random.value);
 			m_ClearMaterial.SetFloat ("_ModFade", ModFade);
+		}
+
+		public void ChangeColor(int level){
+			Color col;
+			Debug.Log ("changed color " + level);
+			switch (level) {
+			case 0:
+				
+				col = Color.HSVToRGB (124/359.0f, 38/255.0f, 255/255.0f);
+				break;
+			case 1:
+				col = Color.HSVToRGB (222/359.0f, 38/255.0f, 255/255.0f);
+				break;
+			case 2:
+				col = Color.HSVToRGB (0/359.0f, 38/255.0f, 255/255.0f);
+				break;
+			case 3:
+				col = Color.HSVToRGB (53/359.0f, 38/255.0f, 255/255.0f);
+				break;
+			default:
+				col = Color.HSVToRGB (0/359.0f, 0/255.0f, 255/255.0f);
+				break;
+			}
+			Debug.Log ("changed color to " + col);
+			m_ClearMaterial.SetColor("_Color", col);
 		}
 
 		public void FadeBW(){

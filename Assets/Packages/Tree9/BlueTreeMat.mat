@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: YUVMaterialEntrance
-  m_Shader: {fileID: 4800000, guid: 93d569365215546f39083c48228c5551, type: 3}
+  m_Name: BlueTreeMat
+  m_Shader: {fileID: 4800000, guid: d4e165f61445a4f3bb847a9a70c6cb9e, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,10 +19,6 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _CurTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -43,7 +39,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: a0fc88038177a47a99d1335f971378d2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -58,42 +54,30 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _textureCbCr:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _textureCrCb:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _textureY:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Amount: 1
+    - _Amplitude: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
+    - _CutoutThresh: 0.2
     - _DetailNormalMapScale: 1
+    - _Distance: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
-    - _ModFade: 0.9999992
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Random1: 0.9615681
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _Speed: 1
     - _SrcBlend: 1
+    - _Transparency: 0.4
     - _UVSec: 0
-    - _WhiteFade: 0
-    - _XPos: 1
-    - _YPos: 1
     - _ZWrite: 1
-    - _isPortrait: 0
-    - _texCoordScale: 1
     m_Colors:
-    - _Color: {r: 0.8509804, g: 1, b: 0.8617729, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _TintColor: {r: 0, g: 0, b: 0, a: 1}

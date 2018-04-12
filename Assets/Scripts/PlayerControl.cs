@@ -29,6 +29,10 @@ namespace UnityEngine.XR.iOS
 		public GameObject RTcmix;
 		public Image fadeImage;
 
+
+		public bool testingScene;
+		public AudioClip testClip;
+
 		// Use this for initialization
 		void Start () {
 			narrating = false;
@@ -168,8 +172,10 @@ namespace UnityEngine.XR.iOS
 					if (hit.transform.tag == "Person"&&!narrating) {
 						Debug.Log ("narrate!");
 						hit.transform.GetComponent<Narrate> ().Play ();
+						if (testingScene) {
+							hit.transform.GetComponent<AudioSource> ().clip = testClip;
+						}
 						StartCoroutine(NarratePause (hit.transform.GetComponent<AudioSource> ().clip.length));
-						talkedTo++;
 						Debug.Log ("talkedTo: " + talkedTo);
 					} 
 						
@@ -277,6 +283,7 @@ namespace UnityEngine.XR.iOS
 			yield return new WaitForSeconds(length);
 			Debug.Log ("narrated");
 			narrating = false;
+			talkedTo++;
 			if (talkedTo >= 4&& !narrating) {
 				Debug.Log ("Changed");
 				ChangeLevel ();

@@ -15,7 +15,9 @@ public class TreeSound : MonoBehaviour {
 		//Load text at beginning
 		//score1 = scoreFile1.text;
 
-		pitch = Random.Range (100, 450);
+		float[] pitches = new float[]{7.0f, 7.2f, 7.4f, 7.5f, 7.7f, 7.9f, 7.11f, 7.12f};
+		int index =  Random.Range (0, 10);
+		pitch = pitches [index];
 
 		RTcmix = GameObject.Find ("RTcmixmain").GetComponent<rtcmixmain> ();
 		cam = Camera.main.transform;

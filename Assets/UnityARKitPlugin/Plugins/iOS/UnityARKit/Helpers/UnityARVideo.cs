@@ -149,6 +149,9 @@ namespace UnityEngine.XR.iOS
 			case 3:
 				col = Color.HSVToRGB (53/359.0f, 38/255.0f, 255/255.0f);
 				break;
+			case 4:
+				col = new Color (255, 255, 255, 255);
+				break;
 			default:
 				col = Color.HSVToRGB (0/359.0f, 0/255.0f, 255/255.0f);
 				break;

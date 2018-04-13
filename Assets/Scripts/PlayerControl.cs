@@ -10,6 +10,7 @@ namespace UnityEngine.XR.iOS
 		public GameObject sceneRoot;
 		Vector3 center;
 		public GameObject crowd;
+		public GameObject bloodStain;
 		public GameObject Elysium;
 		public GameObject blue;
 		public GameObject red;
@@ -69,8 +70,8 @@ namespace UnityEngine.XR.iOS
 		// Update is called once per frame
 		void Update () {
 			if (Entrance) {
-
 				if (Time.timeSinceLevelLoad > 9.5f&&!spawned) {
+
 					sceneRoot.transform.position = transform.position - Camera.main.transform.forward*4;
 					sceneRoot.SetActive (true);
 					spawned = true;
@@ -324,6 +325,11 @@ namespace UnityEngine.XR.iOS
 			//GameObject.Find ("GeneratePlanes").SetActive (false);
 			Debug.Log ("crowd");
 			crowd.transform.position = center;
+
+			bloodStain.GetComponent<Renderer> ().material.SetFloat ("_Tim", Time.time);
+			bloodStain.transform.position = center;
+			bloodStain.SetActive (true);
+			Debug.Log ("tim " + Time.time);
 
 			crowd.SetActive (true);
 

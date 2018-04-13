@@ -12,7 +12,6 @@ public class DistanceShader : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		foreach (Material mat in mats) {
-			Debug.Log ("did it");
 			mat.SetFloat ("_Distance", Vector3.Distance (transform.position, Camera.main.transform.position));
 		}
 	}

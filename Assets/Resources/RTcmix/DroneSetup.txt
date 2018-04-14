@@ -1,3 +1,7 @@
+//Main variables
+
+
+
 bus_config("WAVETABLE", "aux 0 out")
 bus_config("BUTTER", "aux 0 in", "aux 1 out")
 bus_config("GVERB", "aux 1 in", "out 0-1")
@@ -12,4 +16,8 @@ ampenv = maketable("line", 1000, 0, 0, 1, 1, 2,0)
 wave = maketable("wave", 1000, "sine")
 start = irand(0,1)
 dur = irand(4.25, 4.5)
+curNote = 0
+chordb = {6.0, 6.04, 6.07, 6.11}
+chord1 = {6.0, 6.04, 6.07, 6.11, 7.0, 7.04, 7.07, 7.11, 8.0, 8.04, 8.07, 8.11}
+scale = {6.0, 6.2, 6.4, 6.5, 6.7, 6.9, 6.11, 7.0, 7.2, 7.4, 7.5, 7.7, 7.9, 7.11, 8.0, 8.2, 8.4, 8.5, 8.7, 8.9, 8.11}
 MAXBANG(0.5)

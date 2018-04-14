@@ -267,6 +267,7 @@ namespace UnityEngine.XR.iOS
 			//sceneRoot.SetActive (false);
 			RTcmix.SetActive(true);
 			crowd.SetActive (false);
+			bloodStain.SetActive (false);
 			PersonParticle[] parts = crowd.GetComponentsInChildren<PersonParticle> ();
 			foreach (PersonParticle part in parts) {
 				part.Disable ();
@@ -285,6 +286,7 @@ namespace UnityEngine.XR.iOS
 			Debug.Log ("narrated");
 			narrating = false;
 			talkedTo++;
+			GetComponentInChildren<DroneMusic> ().talkedTo = talkedTo;
 			if (talkedTo >= 4&& !narrating) {
 				Debug.Log ("Changed");
 				ChangeLevel ();

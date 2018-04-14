@@ -7,12 +7,13 @@ public class DroneMusic : MonoBehaviour {
 	public TextAsset scoreFile1;
 	private string score1;
 	private rtcmixmain RTcmix;
+	public int talkedTo;
 
 	// Use this for initialization
 	void Start () {
 		//Load text at beginning
 		//score1 = scoreFile1.text;
-
+		talkedTo = 1;
 		RTcmix = GameObject.Find ("RTcmixmain").GetComponent<rtcmixmain> ();
 		if (RTcmix == null) {
 			Debug.Log ("Error! No RTcmixmain prefab object in scene");
@@ -35,6 +36,7 @@ public class DroneMusic : MonoBehaviour {
 
 		//RTcmix.SendScore ("WAVETABLE(0, 3.5, 20000, 440.0)", objno);
 		//Scorefile loaded from the "Resources" folder
+		RTcmix.SendScore ("cnum = " + talkedTo, objno);
 		RTcmix.SendScoreFile ("DroneSetup", objno);
 		//Scorefile loaded from text asset attached to script
 		//RTcmix.SendScore(score1, objno);
@@ -51,6 +53,7 @@ public class DroneMusic : MonoBehaviour {
 
 		if (RTcmix.checkbangRTcmix (objno) == 1) {
 			Debug.Log ("drone bang");
+			RTcmix.SendScore ("cnum = " + talkedTo, objno);
 			RTcmix.SendScoreFile ("UpdateDrones", objno);
 		}
 		RTcmix.printRTcmix (0);

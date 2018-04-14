@@ -2,12 +2,14 @@
 //ra replaces " + (int) Math.Abs(zpos)*3 + "
 	
 	bus_config("WAVETABLE", "aux 0 out")
-	b = basefreq[trand(0, len(basefreq))]
-	WAVETABLE(start, dur, SAMP*ampenv, b, 0, wave)
-	for(i = 0; i < trand(3, 6); i = i+1){
+	curNote = curNote+trand(1, 2)
+	curNote = mod(curNote, len(chordb))
+	WAVETABLE(start, dur, 5000*ampenv, chordb[curNote], 0.5, wave)
+	for(i = 0; i < cnum-1; i = i+1){
 		start = irand(0,1)
 		dur = irand(4.25, 4.5)
-		bus_config("WAVETABLE", "out 0-1")
-		WAVETABLE(start, dur, 10000*ampenv, b*rat[trand(0, len(rat))], 0.5, wave)
+
+		//index
+		WAVETABLE(start, dur, 5000*ampenv/cnum, chord1[trand(0, len(chord1))], 0.5, wave)
 	}
 MAXBANG(irand(3, 4))

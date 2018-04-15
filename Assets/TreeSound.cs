@@ -8,16 +8,23 @@ public class TreeSound : MonoBehaviour {
 	private string score1;
 	private rtcmixmain RTcmix;
 	private Transform cam;
-	private float pitch;
+	private int pitch;
+	private int pitchAdd;
+	private int mod;
+	float intensity;
+	bool changeLight;
+	Light lit;
 
 	// Use this for initialization
 	void Start () {
+		changeLight = false;
 		//Load text at beginning
 		//score1 = scoreFile1.text;
-
-		float[] pitches = new float[]{7.0f, 7.2f, 7.4f, 7.5f, 7.7f, 7.9f, 7.11f, 7.12f};
-		int index =  Random.Range (0, 10);
-		pitch = pitches [index];
+		lit = GetComponentInChildren<Light>();
+		lit.intensity = 5.0f;
+		pitch = Random.Range (0, 15);
+		pitchAdd = 0;
+		mod = Random.Range (3, 5);
 
 		RTcmix = GameObject.Find ("RTcmixmain").GetComponent<rtcmixmain> ();
 		cam = Camera.main.transform;
@@ -51,24 +58,57 @@ public class TreeSound : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (changeLight) {
+			changeLight = false;
+			StartCoroutine (FadeDown (0));
+		}
+		//lit.intensity = intensity;
 		Vector3 dist = cam.position - transform.position;
+		float distance = Vector3.Distance (cam.position, transform.position);
 		RTcmix.setpfieldRTcmix (0, dist.x, objno);
 		RTcmix.setpfieldRTcmix (1, dist.y, objno);
 		RTcmix.setpfieldRTcmix (2, dist.z, objno);
+		RTcmix.setpfieldRTcmix (3, Mathf.Max(2.0f-distance, 0.0f), objno);
 	}
 
 	void OnAudioFilterRead(float[] data, int channels) {
 		RTcmix.runRTcmix (data, objno, 0);
 
 		if (RTcmix.checkbangRTcmix (objno) == 1) {
-			RTcmix.SendScore ("treepitch = " + pitch, objno);
-			Debug.Log ("tree bang");
+			pitchAdd++;
+			pitchAdd = pitchAdd % mod;
+
+
+			//Debug.Log ("tree bang");
+			string score = "treepitch = " + (pitch+pitchAdd);
+			LightFade ();
+			Debug.Log (score);
+
+			RTcmix.SendScore (score, objno);
 			RTcmix.SendScoreFile ("UpdateTrees", objno);
+
+			//StartCoroutine (FadeDown (0));
 		}
 		RTcmix.printRTcmix (0);
 	}
 
 	void OnApplicationQuit(){
 		RTcmix.destroy (objno);
+	}
+
+	void LightFade(){
+		Debug.Log ("ran");
+		intensity = 1.5f;
+		changeLight = true;
+		//StartCoroutine (FadeDown (0));
+	}
+
+	IEnumerator FadeDown(float wait) {
+		
+		yield return new WaitForSeconds(wait);
+		for (float f = intensity; f > 0; f -= 0.01f) {
+			lit.intensity = f;
+			yield return null;
+		}
 	}
 }

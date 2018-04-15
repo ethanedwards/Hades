@@ -36,6 +36,7 @@ namespace UnityEngine.XR.iOS
 
 		// Use this for initialization
 		void Start () {
+			center = new Vector3(0, -0.5f, 0);
 			narrating = false;
 			placed = false;
 			approached = false;
@@ -155,6 +156,17 @@ namespace UnityEngine.XR.iOS
 				}
 
 			}
+
+			//Debug function
+			if(Input.GetKeyDown("space")){
+				if (Entrance) {
+					TransitionEntrance (center);
+				} else {
+					ChangeLevel ();
+				}
+			}
+
+
 
 			//Prevent this from being used before the system kicks in.
 			if (Input.GetMouseButtonDown (0)&&!Entrance) {

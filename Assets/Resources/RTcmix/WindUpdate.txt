@@ -1,0 +1,12 @@
+//fre replaces " + (int) Math.Abs(xpos)*3 + "
+//ra replaces " + (int) Math.Abs(zpos)*3 + "
+	
+  nnn = windnotes[irand(0, len(windnotes))]
+
+   setup(cpspch(nnn), 14/(cnum*cnum), 1)
+
+   IINOISE(start, irand(7, 10), windamp*windampenv, irand(0.33, 0.66))
+
+   //windstart = windstart + irand(2, 6-j/8)
+
+MAXBANG(irand(6, 8))

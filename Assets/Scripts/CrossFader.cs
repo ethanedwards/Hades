@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CrossFader : MonoBehaviour {
 	AudioSource aud;
+	public float DefaultVolume = 1.0f;
 	// Use this for initialization
 	void Start () {
 		aud = GetComponent<AudioSource> ();
@@ -15,6 +16,8 @@ public class CrossFader : MonoBehaviour {
 	}
 
 	IEnumerator Fade(float step, float stop) {
+		stop = stop * DefaultVolume;
+		step = step * DefaultVolume;
 		if (step<0) {
 			for (float f = aud.volume; f >= stop; f += step) {
 				aud.volume = f;

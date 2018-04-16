@@ -1,0 +1,13 @@
+MAXBANG(0.5)
+
+windnotes = { 8.00, 8.02, 8.07, 8.10}//, 9.00, 9.03 }
+
+
+
+windamp = 10000
+
+windampenv = maketable("line", 1000, 0,0, 1,1, 2,0)
+
+
+
+windstart = 0

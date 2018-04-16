@@ -1,0 +1,8 @@
+MAXBANG(irand(0.5, 1))
+bus_config("IIR", "aux 0 out")
+bus_config("LOCALIZE", "aux 0 in", "out 0-1")
+X = makeconnection("inlet", 0, 5)
+Y = makeconnection("inlet", 1, -5)
+Z = makeconnection("inlet", 2, 2)
+DIST = makeconnection("inlet", 3, 1.0)
+LOCALIZE(0, 0, 9999, 1,  X, Y, Z, 0.0, 0.0, 0.0,  1.0, 2, 0,   1, 2, 0.01)

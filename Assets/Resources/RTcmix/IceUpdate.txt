@@ -1,0 +1,63 @@
+/*
+count -= 1
+if (count < 0) {
+    oct = trand(0, 5)
+    count = trand(4, 7)
+    if (random() < 0.3) {
+        basenote += baseshift[trand(0, lbaseshift)]
+        if (basenote > 102) basenote -= 7
+        if (basenote < 92) basenote += 7
+    }
+}
+*/
+
+nnotes = trand(2, 21)
+
+
+	st = 0
+	oct = trand(0, 5)
+    realamp = irand(amp*0.25, amp)
+    note = cpsmidi(basenote + notes[trand(0, lnotes)])
+ FMINST(st, dur, realamp*ampenv, note, (oct+0.413)*note, 1, 1, 0, icewave, dexenv)
+ note += irand(0, 0.0035*note)
+
+ /*
+for (i = 0; i < nnotes; i += 1) {
+    st = irand(0, window)
+    realamp = irand(amp*0.25, amp)
+    note = cpsmidi(basenote + notes[trand(0, lnotes)])
+    FMINST(st, dur, realamp*ampenv, note, (oct+0.413)*note, 1, 1, 0, wave, dexenv)
+    note += irand(0, 0.0035*note)
+    FMINST(st, dur, realamp*ampenv, note, (oct+0.413)*note, 1, 1, 0, wave, dexenv)
+}
+*/
+
+//MAXBANG(window+1)
+
+/*
+amcount -= 1
+if (amcount < 0) {
+    st = 0
+    oct = 2
+    amdur = irand(9, 19)
+    note = cpsmidi(basenote-63)
+    AMINST(st, amdur, amamp*amampenv, note, (oct+0.413)*note, 0, dexenv, amwave, amwave)
+    note += irand(0.001, 0.007*note)
+    AMINST(st, amdur, amamp*amampenv, note, (oct+0.413)*note, 0, dexenv, amwave, amwave)
+    if (random() < 0.3) {
+        dice = random()
+        if (dice < 0.33) secondshift = 61
+        else if (dice < 0.66) secondshift = 65
+        else secondshift = 68
+        note = cpsmidi(basenote-secondshift)
+        st = irand(0.5, 7.0)
+        amdur = irand(9, 19)
+        AMINST(st, amdur, amamp*amampenv, note, (oct+0.413)*note, 0, dexenv, amwave, amwave)
+        note += irand(0.001, 0.007*note)
+        AMINST(st, amdur, amamp*amampenv, note, (oct+0.413)*note, 0, dexenv, amwave, amwave)
+    }
+    amcount = trand(7, 14)
+}
+*/
+
+MAXBANG(irand(3, 4))

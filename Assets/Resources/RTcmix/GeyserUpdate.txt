@@ -1,0 +1,22 @@
+
+st = 0
+ad = 0//trand(0, 5)*.01
+for (i = 0; i < len(pattern); i += 1) {
+	pitch = cpspch(scale[pattern[i]-1]+adder+ad)
+	dur = 0.5
+
+		FMINST(st, dur, gamp*gampenv, pitch, 0.999*pitch, index1, index1, 0.5, wave, 1)
+		FMINST(st, dur, gamp*gampenv, pitch, 1.997*pitch, index2, index2, 0.5, wave, 1)
+		FMINST(st, dur, gamp*gampenv, pitch, 3.006*pitch, index3, index3, 0.5, wave, 1)
+		FMINST(st, dur, gamp*gampenv, pitch, 6.009*pitch, index4, index4, 0.5, wave, 1)
+
+		pitch += 1.0
+		FMINST(st, dur, gamp*gampenv, pitch, 0.999*pitch, index1, index1, 0.5, wave, 1)
+		FMINST(st, dur, gamp*gampenv, pitch, 1.997*pitch, index2, index2, 0.5, wave, 1)
+		FMINST(st, dur, gamp*gampenv, pitch, 3.006*pitch, index3, index3, 0.5, wave, 1)
+		FMINST(st, dur, gamp*gampenv, pitch, 6.009*pitch, index4, index4, 0.5, wave, 1)
+
+	st += dur
+	//pitch = irand(200, 400)
+}
+MAXBANG(st+0.5)

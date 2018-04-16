@@ -72,8 +72,9 @@ namespace UnityEngine.XR.iOS
 		void Update () {
 			if (Entrance) {
 				if (Time.timeSinceLevelLoad > 9.5f&&!spawned) {
-
-					sceneRoot.transform.position = transform.position - Camera.main.transform.forward*4;
+					Vector3 branchPos = transform.position - Camera.main.transform.forward*4;
+					branchPos.y = 0;
+					sceneRoot.transform.position = branchPos;
 					sceneRoot.SetActive (true);
 					spawned = true;
 
@@ -150,7 +151,7 @@ namespace UnityEngine.XR.iOS
 							placed = false;
 							GetComponent<UnityARVideo> ().FadeBW ();
 							text.GetComponent<TextInstructions> ().Open ();
-							GameObject.Find ("GeneratePlanes").SetActive (true);
+							//GameObject.Find ("GeneratePlanes").SetActive (true);
 						}
 					}
 				}
@@ -244,19 +245,23 @@ namespace UnityEngine.XR.iOS
 			case 0:
 				Elysium.SetActive (false);
 				blue.SetActive (true);
+				RTcmix.GetComponent<DroneMusic> ().ChangeScene (1);
 				break;
 
 			case 1:
 				blue.SetActive (false);
 				red.SetActive (true);
+				RTcmix.GetComponent<DroneMusic> ().ChangeScene (2);
 				break;
 			case 2:
 				red.SetActive (false);
 				yellow.SetActive (true);
+				RTcmix.GetComponent<DroneMusic> ().ChangeScene (3);
 				break;
 			case 3:
 				yellow.SetActive (false);
 				white.SetActive (true);
+				RTcmix.GetComponent<DroneMusic> ().ChangeScene (4);
 				break;
 			default:
 				break;

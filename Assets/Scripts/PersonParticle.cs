@@ -19,9 +19,11 @@ public class PersonParticle : MonoBehaviour {
 	private Vector3[] vertices;
 	int numParticles;
 	private bool skel;
+	bool deleted;
 	ParticleSystem.Particle[] evap;
 	// Use this for initialization
 	void Start () {
+		deleted = false;
 		currentPS = Instantiate (pointCloudParticlePrefab);
 		GetComponent<SkinnedMeshRenderer> ().sharedMaterial.color = new Color (0, 0, 0, 0);
 		mesh = new Mesh ();//GetComponent<SkinnedMeshRenderer> ().sharedMesh;
@@ -52,7 +54,7 @@ public class PersonParticle : MonoBehaviour {
 			SkelParticle ();
 			//mesh.vertices = vertices;
 			//mesh.RecalculateBounds();
-		} else {
+		} else  if(!deleted){
 			for(int i = 0; i < numParticles; i++){
 				Vector3 offset = new Vector3 (Random.value, Random.value, Random.value);
 				evap[i].position = evap[i].position + Vector3.up / 40.0f + offset/30.0f;
@@ -112,6 +114,7 @@ public class PersonParticle : MonoBehaviour {
 	IEnumerator Delete(float wait) {
 		yield return new WaitForSeconds(wait);
 		Destroy (currentPS);
+		deleted = true;
 	}
 
 	void OnDisable(){

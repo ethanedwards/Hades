@@ -1,0 +1,43 @@
+MAXBANG(0.5)
+
+load("FMINST")
+load("GVERB")
+load("BUTTER")
+load("AMINST")
+bus_config("FMINST", "aux 0 out")
+bus_config("GVERB", "aux 0 in", "aux 1-2 out")
+bus_config("BUTTER", "aux 1-2 in", "aux 3-4 out")
+bus_config("LOCALIZE", "aux 3-4 in", "out 0-1");
+bus_config("AMINST", "aux 0 out")
+SAMP = makeconnection("inlet", 3, 1.0)
+
+X = makeconnection("inlet", 0, 5)
+Y = makeconnection("inlet", 1, -5)
+Z = makeconnection("inlet", 2, 2)
+DIST = makeconnection("inlet", 3, 1.0)
+
+LOCALIZE(0, 0, 9999, SAMP,  X, Y, Z, 0.0, 0.0, 0.0,  1.0, 2, 0,   1, 2, 0.01)
+
+basenote = trand(92, 102)
+baseshift = { -2, -5, 5, 2 }
+lbaseshift = len(baseshift)
+notes = { 0, 2, 4, 5, 7, 10, 12 }
+lnotes = len(notes)
+
+amp = 8800
+ampenv = maketable("line", 1000, 0,1, 7,1, 10,0)
+amamp = 2500
+amampenv = maketable("line", 1000, 0,1, 5,1, 10,0)
+
+icewave = maketable("wave", 1000, "sine")
+amwave = maketable("wave", 1000,1, 0.2)
+dexenv = maketable("line", 1000, 0,1, 1,1)
+
+window = 4
+dur = 0.2
+count = 0
+amcount = trand(7, 14)
+
+GVERB(0, 0, 9999, 1.0, 134.0, 17.0, 0.34, 0.78, -70.0, -11.0, -3.0, 1.0)
+BUTTER(0, 0, 9999, 1, 1, 1,  0, 0, 0, 0, 1500)
+BUTTER(0, 0, 9999, 1, 1, 1,  0, 1, 1, 0, 1500)

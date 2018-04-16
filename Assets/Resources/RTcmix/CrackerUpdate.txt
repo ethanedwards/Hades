@@ -1,0 +1,15 @@
+//env = maketable("window", 1000, "hanning")
+env = 1
+print("hi")
+	start = 0
+   for(start = 0; start < irand(3, 4); start = start + 0.1) {
+      setup((random()*2000.0) + 300.0, -0.5, 1)
+      print("hi2")
+
+      BUZZ(start, 0.1, DIST*20000*env, cpitch, random())
+      print("hi3")
+      BUZZ(start, 0.1, DIST*20000*env, cpitch + irand(-2.5, 2.5), random())
+      print("hi4")
+      cpitch = cpitch + irand(-1, 1)
+   }
+   MAXBANG(irand(2, 3))

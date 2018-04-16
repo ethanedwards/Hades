@@ -1,0 +1,14 @@
+
+	
+	bus_config("WAVETABLE", "aux 0 out")
+	curNote = curNote+trand(1, 2)
+	curNote = mod(curNote, len(chordb))
+	WAVETABLE(start, dur, 3000*fireampenv, irand(200, 400), 0.5, firewave)
+	for(i = 0; i < cnum-1; i = i+1){
+		start = 0
+		dur = irand(3, 5)
+
+		//index
+		WAVETABLE(start, dur, 5000*fireampenv/cnum, irand(200, 400), 0.5, firewave)
+	}
+MAXBANG(irand(1, 3))

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LoadScene : MonoBehaviour {
-
+	public int sceneNum;
 	// Use this for initialization
 	void Start () {
 		
@@ -17,6 +17,6 @@ public class LoadScene : MonoBehaviour {
 
 	public void Load(){
 		Debug.Log ("Loading Entrance");
-		SceneManager.LoadScene (1);
+		SceneManager.LoadScene (sceneNum);
 	}
 }

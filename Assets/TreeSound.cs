@@ -82,7 +82,7 @@ public class TreeSound : MonoBehaviour {
 			//Debug.Log ("tree bang");
 			string score = "treepitch = " + (pitch+pitchAdd);
 			LightFade ();
-			Debug.Log (score);
+			//Debug.Log (score);
 
 			RTcmix.SendScore (score, objno);
 			RTcmix.SendScoreFile ("UpdateTrees", objno);
@@ -97,7 +97,7 @@ public class TreeSound : MonoBehaviour {
 	}
 
 	void LightFade(){
-		Debug.Log ("ran");
+		//Debug.Log ("ran");
 		intensity = 1.5f;
 		changeLight = true;
 		//StartCoroutine (FadeDown (0));

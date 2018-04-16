@@ -8,6 +8,7 @@ public class DroneMusic : MonoBehaviour {
 	private string score1;
 	private rtcmixmain RTcmix;
 	public int talkedTo;
+	private int scene;
 
 	// Use this for initialization
 	void Start () {
@@ -38,9 +39,24 @@ public class DroneMusic : MonoBehaviour {
 		//Scorefile loaded from the "Resources" folder
 		RTcmix.SendScore ("cnum = " + talkedTo, objno);
 		RTcmix.SendScoreFile ("DroneSetup", objno);
+		//ChangeScene (2);
 		//Scorefile loaded from text asset attached to script
 		//RTcmix.SendScore(score1, objno);
 		//RTcmix.SendScoreAsset (scoreFile, objno);
+	}
+
+	public void ChangeScene(int level){
+		scene = level;
+		if (level == 1) {
+			RTcmix.SendScoreFile ("WindSetup", objno);
+		}
+		else if (level == 2) {
+			Debug.Log ("fire");
+			RTcmix.SendScoreFile ("FireSetup", objno);
+		}
+		else if (level == 3) {
+			RTcmix.SendScoreFile ("OrganSetup", objno);
+		}
 	}
 
 	// Update is called once per frame
@@ -52,9 +68,19 @@ public class DroneMusic : MonoBehaviour {
 		RTcmix.runRTcmix (data, objno, 0);
 
 		if (RTcmix.checkbangRTcmix (objno) == 1) {
-			Debug.Log ("drone bang");
+			//Debug.Log ("drone bang");
 			RTcmix.SendScore ("cnum = " + talkedTo, objno);
-			RTcmix.SendScoreFile ("UpdateDrones", objno);
+			if (scene == 0) {
+				RTcmix.SendScoreFile ("UpdateDrones", objno);
+			} else if (scene == 1) {
+				RTcmix.SendScoreFile ("WindUpdate", objno);
+			} else if (scene == 2) {
+				Debug.Log ("firef");
+				RTcmix.SendScoreFile ("FireUpdate", objno);
+			}
+			else if (scene == 3) {
+				RTcmix.SendScoreFile ("OrganUpdate", objno);
+			}
 		}
 		RTcmix.printRTcmix (0);
 	}

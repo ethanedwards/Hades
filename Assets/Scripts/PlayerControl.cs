@@ -89,7 +89,7 @@ namespace UnityEngine.XR.iOS
 				}
 				//Do the rotation thing
 				if (spawned&&!fired) {
-					if (Vector3.Distance (flame.transform.position, sceneRoot.transform.position) < 0.5f) {
+					if (Vector3.Distance (flame.transform.position, sceneRoot.transform.position) < 0.5f||Time.timeSinceLevelLoad>60.0f) {
 						flame.transform.position = sceneRoot.transform.position;
 						flame.transform.parent = sceneRoot.transform;
 						fired = true;
@@ -107,6 +107,8 @@ namespace UnityEngine.XR.iOS
 							//Debug.Log (rotator.transform.rotation.eulerAngles);
 							Vector3 flamePos = transform.position + rotator.transform.forward * 4;
 							flame.transform.position = flamePos;
+							Vector3 branchPos = transform.position - Camera.main.transform.forward*4;
+							sceneRoot.transform.position = branchPos;
 						} else {
 							flame.GetComponent<Muse> ().Play ();
 							Vector3 flamePos = transform.position + rotator.transform.forward * 4;

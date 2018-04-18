@@ -4,8 +4,29 @@ using UnityEngine;
 
 public class Narrate : MonoBehaviour {
 	// Use this for initialization
+	public int color;
 	void Start () {
+		Color col;
+		switch (color) {
+		case 0:
+			col = new Color (0, 1, 0, 1);
+			break;
+		case 1:
+			col = new Color (0, 0, 1, 1);
+			break;
+		case 2:
+			col = new Color (1, 0, 0, 1);
+			break;
+		case 3:
+			col = new Color (1, 1, 0, 1);
+			break;
+		default:
+			col = new Color (0, 0, 0, 1);
+			break;
+		}
 
+
+		GetComponentInChildren<Renderer> ().material.SetColor ("_TintColor", col);
 	}
 	
 	// Update is called once per frame
@@ -17,7 +38,7 @@ public class Narrate : MonoBehaviour {
 		Debug.Log ("Playing!");
 		this.GetComponent<AudioSource>().Play();
 		StartCoroutine(FadeDown ());
-		GetComponentInChildren<Renderer> ().material.SetColor ("_TintColor", new Color (1, 0, 0, 1));
+		GetComponentInChildren<Renderer> ().material.SetColor ("_TintColor", new Color (0, 0, 0, 1));
 	}
 
 	IEnumerator FadeDown()

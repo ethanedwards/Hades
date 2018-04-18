@@ -58,9 +58,9 @@ public class TextInstructions : MonoBehaviour {
 	{
 		StartCoroutine (FadeDown());
 		yield return new WaitForSeconds(4.0f);
-		text.text = "Tap the Shades to Interact";
+		text.text = "Tap the Spirits to Interact";
 		StartCoroutine (FadeUp());
-		yield return new WaitForSeconds(4.0f);
+		yield return new WaitForSeconds(8.0f);
 		StartCoroutine (FadeDown());
 	}
 

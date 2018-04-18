@@ -20,6 +20,8 @@ public class PersonParticle : MonoBehaviour {
 	int numParticles;
 	private bool skel;
 	bool deleted;
+	public bool end;
+	public float endingTime;
 	ParticleSystem.Particle[] evap;
 	// Use this for initialization
 	void Start () {
@@ -32,6 +34,9 @@ public class PersonParticle : MonoBehaviour {
 		trans = this.transform;
 		skel = true;
 		ran = false;
+		if (end) {
+			StartCoroutine (Dissipate(endingTime));
+		}
 	}
 
 
@@ -101,6 +106,12 @@ public class PersonParticle : MonoBehaviour {
 		StartCoroutine (Delete (5.0f));
 
 	}
+
+	IEnumerator Dissipate(float wait) {
+		yield return new WaitForSeconds(wait);
+		Disable ();
+	}
+
 
 	IEnumerator FadeDown(float wait) {
 		yield return new WaitForSeconds(wait);

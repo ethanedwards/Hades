@@ -11,7 +11,7 @@ GVERB(0, 0, 9999, 0.9, 78.0, 7.0, 0.71, 0.34, -10.0, -11.0, -9.0, 3.0)
 orgamp = 500
 orgampenv = maketable("line", 1000, 0,0, 1,1, 9,1, 10,0)
 
-wave = maketable("wave", 1000, "sine")
+orgwave = maketable("wave", 1000, "sine")
 
 index1 = 2
 index2 = 2

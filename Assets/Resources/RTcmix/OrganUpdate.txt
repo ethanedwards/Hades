@@ -3,18 +3,17 @@ st = 0
 dur = irand(6, 8)
 for (i = 0; i < 3; i += 1) {
 	pitch = cpspch(chord1[i+sp])
-	dur = 1
 
-		FMINST(st, dur, orgamp*orgampenv, pitch, 0.999*pitch, index1, index1, 0.5, wave, 1)
-		FMINST(st, dur, orgamp*orgampenv, pitch, 1.997*pitch, index2, index2, 0.5, wave, 1)
-		FMINST(st, dur, orgamp*orgampenv, pitch, 3.006*pitch, index3, index3, 0.5, wave, 1)
-		FMINST(st, dur, orgamp*orgampenv, pitch, 6.009*pitch, index4, index4, 0.5, wave, 1)
+		FMINST(st, dur, orgamp*orgampenv, pitch, 0.999*pitch, index1, index1, 0.5, orgwave, 1)
+		FMINST(st, dur, orgamp*orgampenv, pitch, 1.997*pitch, index2, index2, 0.5, orgwave, 1)
+		FMINST(st, dur, orgamp*orgampenv, pitch, 3.006*pitch, index3, index3, 0.5, orgwave, 1)
+		FMINST(st, dur, orgamp*orgampenv, pitch, 6.009*pitch, index4, index4, 0.5, orgwave, 1)
 
 		pitch += 1.0
-		FMINST(st, dur, orgamp*orgampenv, pitch, 0.999*pitch, index1, index1, 0.5, wave, 1)
-		FMINST(st, dur, orgamp*orgampenv, pitch, 1.997*pitch, index2, index2, 0.5, wave, 1)
-		FMINST(st, dur, orgamp*orgampenv, pitch, 3.006*pitch, index3, index3, 0.5, wave, 1)
-		FMINST(st, dur, orgamp*orgampenv, pitch, 6.009*pitch, index4, index4, 0.5, wave, 1)
+		FMINST(st, dur, orgamp*orgampenv, pitch, 0.999*pitch, index1, index1, 0.5, orgwave, 1)
+		FMINST(st, dur, orgamp*orgampenv, pitch, 1.997*pitch, index2, index2, 0.5, orgwave, 1)
+		FMINST(st, dur, orgamp*orgampenv, pitch, 3.006*pitch, index3, index3, 0.5, orgwave, 1)
+		FMINST(st, dur, orgamp*orgampenv, pitch, 6.009*pitch, index4, index4, 0.5, orgwave, 1)
 
 	//st += dur
 	//pitch = irand(200, 400)

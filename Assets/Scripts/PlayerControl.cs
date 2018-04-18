@@ -18,6 +18,7 @@ namespace UnityEngine.XR.iOS
 		public GameObject red;
 		public GameObject yellow;
 		public GameObject white;
+		public GameObject particles;
 		public float maxRayDistance = 10.0f;
 		public LayerMask collisionLayer = 1 << 10;
 		bool narrating;
@@ -28,6 +29,7 @@ namespace UnityEngine.XR.iOS
 		bool fired;
 		int talkedTo;
 		int level;
+		bool firstshade;
 		public bool Entrance = false;
 		public GameObject text;
 		public GameObject RTcmix;
@@ -45,6 +47,7 @@ namespace UnityEngine.XR.iOS
 			approached = false;
 			fired = false;
 			spawned = false;
+			firstshade = false;
 			talkedTo = 0;
 			level = 0;
 		}
@@ -188,6 +191,7 @@ namespace UnityEngine.XR.iOS
 							pickedUp = true;
 							placed = false;
 							GetComponent<UnityARVideo> ().FadeBW ();
+							particles.SetActive (true);
 							text.GetComponent<TextInstructions> ().Open ();
 							//GameObject.Find ("GeneratePlanes").SetActive (true);
 						}
@@ -224,6 +228,10 @@ namespace UnityEngine.XR.iOS
 					if (hit.transform.tag == "Person"&&!narrating) {
 						Debug.Log ("narrate!");
 						hit.transform.GetComponent<Narrate> ().Play ();
+						if (!firstshade) {
+							text.GetComponent<TextInstructions> ().Fade ();
+							firstshade = true;
+						}
 						if (testingScene) {
 							hit.transform.GetComponent<AudioSource> ().clip = testClip;
 						}

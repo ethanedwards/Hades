@@ -3092,6 +3092,7 @@ MonoBehaviour:
   red: {fileID: 255566356}
   yellow: {fileID: 1256449711}
   white: {fileID: 649495439}
+  particles: {fileID: 1834154963}
   maxRayDistance: 10
   collisionLayer:
     serializedVersion: 2
@@ -17852,12 +17853,12 @@ GameObject:
   - component: {fileID: 1834154965}
   - component: {fileID: 1834154964}
   m_Layer: 0
-  m_Name: PointCloudParticleExample
+  m_Name: ParticlePopulater
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1834154964
 MonoBehaviour:
   m_ObjectHideFlags: 0

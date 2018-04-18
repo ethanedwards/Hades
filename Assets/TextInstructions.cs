@@ -31,6 +31,10 @@ public class TextInstructions : MonoBehaviour {
 		StartCoroutine (BeginElysium ());
 	}
 
+	public void Fade(){
+		StartCoroutine (FadeDown ());
+	}
+
 	IEnumerator Beginning()
 	{
 		Debug.Log("begin");
@@ -60,8 +64,8 @@ public class TextInstructions : MonoBehaviour {
 		yield return new WaitForSeconds(4.0f);
 		text.text = "Tap the Spirits to Interact";
 		StartCoroutine (FadeUp());
-		yield return new WaitForSeconds(8.0f);
-		StartCoroutine (FadeDown());
+		//yield return new WaitForSeconds(8.0f);
+		//StartCoroutine (FadeDown());
 	}
 
 	IEnumerator OpenSpace()

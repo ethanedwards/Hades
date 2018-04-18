@@ -15,7 +15,15 @@ public class Muse : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(!played&&this.GetComponent<Renderer>().isVisible){
+		//if(!played&&this.GetComponent<Renderer>().isVisible){
+		//	Debug.Log ("playing");
+		//	StartCoroutine (PlayMuse ());
+		//	played = true;
+		//}
+	}
+
+	public void Play(){
+		if (!played) {
 			StartCoroutine (PlayMuse ());
 			played = true;
 		}

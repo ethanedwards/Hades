@@ -9,6 +9,8 @@ namespace UnityEngine.XR.iOS
 
 		public GameObject sceneRoot;
 		Vector3 center;
+		public GameObject flame;
+		public GameObject rotator;
 		public GameObject crowd;
 		public GameObject bloodStain;
 		public GameObject Elysium;
@@ -23,6 +25,7 @@ namespace UnityEngine.XR.iOS
 		bool approached;
 		bool pickedUp;
 		bool spawned;
+		bool fired;
 		int talkedTo;
 		int level;
 		public bool Entrance = false;
@@ -40,6 +43,7 @@ namespace UnityEngine.XR.iOS
 			narrating = false;
 			placed = false;
 			approached = false;
+			fired = false;
 			spawned = false;
 			talkedTo = 0;
 			level = 0;
@@ -73,11 +77,43 @@ namespace UnityEngine.XR.iOS
 			if (Entrance) {
 				if (Time.timeSinceLevelLoad > 9.5f&&!spawned) {
 					Vector3 branchPos = transform.position - Camera.main.transform.forward*4;
-					branchPos.y = 0;
+					//branchPos.y = 0;
 					sceneRoot.transform.position = branchPos;
 					sceneRoot.SetActive (true);
 					spawned = true;
-
+					rotator.transform.position = transform.position;
+					Vector3 flamePos = transform.position + Camera.main.transform.forward*4;
+					//flamePos.y = 0;
+					flame.SetActive (true);
+					flame.transform.position = flamePos;
+				}
+				//Do the rotation thing
+				if (spawned&&!fired) {
+					if (Vector3.Distance (flame.transform.position, sceneRoot.transform.position) < 0.5f) {
+						flame.transform.position = sceneRoot.transform.position;
+						flame.transform.parent = sceneRoot.transform;
+						fired = true;
+					} else {
+						ParticleSystem.MainModule main = flame.GetComponent<ParticleSystem> ().main;
+						Color col = main.startColor.color;
+						if (col.a < 1.0f) {
+							col.a = col.a + .005f;
+							main.startColor = col;
+							rotator.transform.position = transform.position;
+							Quaternion rot = rotator.transform.rotation;
+							//rot.eulerAngles = new Vector3 (0, transform.rotation.eulerAngles.y, 0);
+							//Debug.Log (rot.eulerAngles);
+							rotator.transform.rotation = transform.rotation;
+							//Debug.Log (rotator.transform.rotation.eulerAngles);
+							Vector3 flamePos = transform.position + rotator.transform.forward * 4;
+							flame.transform.position = flamePos;
+						} else {
+							flame.GetComponent<Muse> ().Play ();
+							Vector3 flamePos = transform.position + rotator.transform.forward * 4;
+							rotator.transform.Rotate (new Vector3 (0, 1, 0) * Time.deltaTime * 7f);
+							flame.transform.position = flamePos;
+						}
+					}
 				}
 
 				if (pickedUp && !placed) {
@@ -140,7 +176,7 @@ namespace UnityEngine.XR.iOS
 					text.GetComponent<TextInstructions> ().Next ();
 					approached = true;
 				}
-				if (Input.GetMouseButtonDown (0) && pickedUp == false && approached && !placed) {
+				if (Input.GetMouseButtonDown (0) && pickedUp == false && approached && !placed && fired) {
 					Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 					RaycastHit hit;
 					if (Physics.Raycast (ray, out hit, maxRayDistance, collisionLayer)) {
@@ -304,7 +340,7 @@ namespace UnityEngine.XR.iOS
 			narrating = false;
 			talkedTo++;
 			GetComponentInChildren<DroneMusic> ().talkedTo = talkedTo;
-			if (talkedTo >= 4&& !narrating) {
+			if (!narrating && (talkedTo >= 4&&(level==0||level==3)|| talkedTo >= 3&&(level==1||level==2))) {
 				Debug.Log ("Changed");
 				ChangeLevel ();
 

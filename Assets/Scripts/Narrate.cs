@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Narrate : MonoBehaviour {
-
 	// Use this for initialization
 	void Start () {
-		
+
 	}
 	
 	// Update is called once per frame
@@ -18,6 +17,7 @@ public class Narrate : MonoBehaviour {
 		Debug.Log ("Playing!");
 		this.GetComponent<AudioSource>().Play();
 		StartCoroutine(FadeDown ());
+		GetComponentInChildren<Renderer> ().material.SetColor ("_TintColor", new Color (1, 0, 0, 1));
 	}
 
 	IEnumerator FadeDown()

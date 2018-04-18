@@ -40,7 +40,7 @@ public class TextInstructions : MonoBehaviour {
 		yield return new WaitForSeconds(6.5f);
 		StartCoroutine (FadeDown());
 		yield return new WaitForSeconds(4.0f);
-		text.text = "Find the Branch and Approach It";
+		text.text = "Follow the Flame";
 		StartCoroutine (FadeUp());
 	}
 		

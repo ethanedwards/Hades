@@ -8,7 +8,7 @@ public class TreeSound : MonoBehaviour {
 	private string score1;
 	private rtcmixmain RTcmix;
 	private Transform cam;
-	private int pitch;
+	public int pitch;
 	private int pitchAdd;
 	private int mod;
 	float intensity;
@@ -22,7 +22,7 @@ public class TreeSound : MonoBehaviour {
 		//score1 = scoreFile1.text;
 		lit = GetComponentInChildren<Light>();
 		lit.intensity = 5.0f;
-		pitch = Random.Range (0, 15);
+		//pitch = Random.Range (0, 15);
 		pitchAdd = 0;
 		mod = Random.Range (3, 5);
 
@@ -68,7 +68,7 @@ public class TreeSound : MonoBehaviour {
 		RTcmix.setpfieldRTcmix (0, dist.x, objno);
 		RTcmix.setpfieldRTcmix (1, dist.y, objno);
 		RTcmix.setpfieldRTcmix (2, dist.z, objno);
-		RTcmix.setpfieldRTcmix (3, Mathf.Max(2.0f-distance, 0.0f), objno);
+		RTcmix.setpfieldRTcmix (3, Mathf.Max(3.0f-distance/2, 0.0f), objno);
 	}
 
 	void OnAudioFilterRead(float[] data, int channels) {

@@ -8,7 +8,7 @@ bus_config("GVERB", "aux 0-1 in", "out 0-1")
 
 GVERB(0, 0, 9999, 0.9, 78.0, 7.0, 0.71, 0.34, -10.0, -11.0, -9.0, 3.0)
 
-orgamp = 500
+orgamp = 250
 orgampenv = maketable("line", 1000, 0,0, 1,1, 9,1, 10,0)
 
 orgwave = maketable("wave", 1000, "sine")

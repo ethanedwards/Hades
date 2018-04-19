@@ -45,7 +45,7 @@ public class Narrate : MonoBehaviour {
 	{
 		ChangeVolume(-.01f, 0.35f);
 		yield return new WaitForSeconds(this.GetComponent<AudioSource>().clip.length);
-		ChangeVolume(0.1f, 1.0f);
+		ChangeVolume(0.01f, 1.0f);
 		Debug.Log ("ChildDisabled");
 		DisableChildren ();
 		this.tag = "Finished";

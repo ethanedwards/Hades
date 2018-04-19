@@ -14,11 +14,11 @@ public class IceSound : MonoBehaviour {
 	float intensity;
 	bool changeLight;
 	Light lit;
-	private int baseNote;
+	public int baseNote;
 
 	// Use this for initialization
 	void Start () {
-		baseNote = Random.Range (80, 100);
+		//baseNote = Random.Range (80, 100);
 		changeLight = false;
 		//Load text at beginning
 		//score1 = scoreFile1.text;

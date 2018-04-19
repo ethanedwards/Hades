@@ -9,6 +9,7 @@ namespace UnityEngine.XR.iOS
 
 		public GameObject sceneRoot;
 		Vector3 center;
+		Quaternion centerRot;
 		public GameObject flame;
 		public GameObject rotator;
 		public GameObject crowd;
@@ -92,9 +93,10 @@ namespace UnityEngine.XR.iOS
 				}
 				//Do the rotation thing
 				if (spawned&&!fired) {
-					if (Vector3.Distance (flame.transform.position, sceneRoot.transform.position) < 0.5f||Time.timeSinceLevelLoad>60.0f) {
+					if (Vector3.Distance (flame.transform.position, sceneRoot.transform.position) < 0.25f||Time.timeSinceLevelLoad>60.0f) {
 						flame.transform.position = sceneRoot.transform.position;
 						flame.transform.parent = sceneRoot.transform;
+						text.GetComponent<TextInstructions> ().Next ();
 						fired = true;
 					} else {
 						ParticleSystem.MainModule main = flame.GetComponent<ParticleSystem> ().main;
@@ -113,10 +115,15 @@ namespace UnityEngine.XR.iOS
 							Vector3 branchPos = transform.position - Camera.main.transform.forward*4;
 							sceneRoot.transform.position = branchPos;
 						} else {
-							flame.GetComponent<Muse> ().Play ();
-							Vector3 flamePos = transform.position + rotator.transform.forward * 4;
-							rotator.transform.Rotate (new Vector3 (0, 1, 0) * Time.deltaTime * 7f);
-							flame.transform.position = flamePos;
+							if (Time.timeSinceLevelLoad > 35f) {
+								Vector3 flamePos = Vector3.Lerp (flame.transform.position, sceneRoot.transform.position, (Time.timeSinceLevelLoad - 35.0f) / 25.0f);
+								flame.transform.position = flamePos;
+							} else {
+								flame.GetComponent<Muse> ().Play ();
+								Vector3 flamePos = transform.position + rotator.transform.forward * 4;
+								rotator.transform.Rotate (new Vector3 (0, 1, 0) * Time.deltaTime * 7f);
+								flame.transform.position = flamePos;
+							}
 						}
 					}
 				}
@@ -178,7 +185,7 @@ namespace UnityEngine.XR.iOS
 
 				//if (Vector3.Distance (transform.position, sceneRoot.transform.position) < 1.0 && !approached) {
 				if(sceneRoot.GetComponent<Renderer>().isVisible&&!approached&&Time.timeSinceLevelLoad>15.0f){
-					text.GetComponent<TextInstructions> ().Next ();
+					//text.GetComponent<TextInstructions> ().Next ();
 					approached = true;
 				}
 				if (Input.GetMouseButtonDown (0) && pickedUp == false && approached && !placed && fired) {
@@ -290,24 +297,37 @@ namespace UnityEngine.XR.iOS
 			switch(level){
 			case 0:
 				Elysium.SetActive (false);
+				blue.transform.position = center;
+				blue.transform.rotation = centerRot;
 				blue.SetActive (true);
 				RTcmix.GetComponent<DroneMusic> ().ChangeScene (1);
 				break;
 
 			case 1:
 				blue.SetActive (false);
+				red.transform.position = center;
+				red.transform.rotation = centerRot;
 				red.SetActive (true);
 				RTcmix.GetComponent<DroneMusic> ().ChangeScene (2);
 				break;
 			case 2:
 				red.SetActive (false);
+				yellow.transform.position = center;
+				yellow.transform.rotation = centerRot;
 				yellow.SetActive (true);
 				RTcmix.GetComponent<DroneMusic> ().ChangeScene (3);
 				break;
 			case 3:
 				yellow.SetActive (false);
+				white.transform.position = center;
+				white.transform.rotation = centerRot;
 				white.SetActive (true);
 				RTcmix.GetComponent<DroneMusic> ().ChangeScene (4);
+				GameObject[] objs;
+				objs = GameObject.FindGameObjectsWithTag ("RTcmixobj");
+				foreach (GameObject obj in objs) {
+					obj.GetComponent<CrossFader> ().ChangeVol (-0.01f, 0f);
+				}
 				break;
 			default:
 				break;
@@ -336,6 +356,9 @@ namespace UnityEngine.XR.iOS
 				part.Disable ();
 			}
 			Elysium.transform.position = center;
+			centerRot = transform.rotation;
+			centerRot.eulerAngles = new Vector3 (0, centerRot.eulerAngles.y, 0);
+			Elysium.transform.rotation = centerRot;
 			Elysium.SetActive (true);
 			text.GetComponent<TextInstructions> ().Elysium ();
 			GetComponent<UnityARVideo> ().ChangeColor (level);

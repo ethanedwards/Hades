@@ -39,7 +39,7 @@ public class DroneMusic : MonoBehaviour {
 		//Scorefile loaded from the "Resources" folder
 		RTcmix.SendScore ("cnum = " + talkedTo, objno);
 		RTcmix.SendScoreFile ("DroneSetup", objno);
-		ChangeScene (3);
+		//ChangeScene (3);
 		//Scorefile loaded from text asset attached to script
 		//RTcmix.SendScore(score1, objno);
 		//RTcmix.SendScoreAsset (scoreFile, objno);

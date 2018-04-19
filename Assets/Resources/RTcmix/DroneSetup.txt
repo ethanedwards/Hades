@@ -12,8 +12,9 @@ BUTTER(0, 0, 9999, 1, "lowpass", 1, 1, 0, 0, 0, FILTFREQ)
 GVERB(0, 0, 9999, 1, RSIZE, 25, 0.87, 0.7, -34, -9, -3, 1)
 basefreq = {100, 200, 300, 400}
 rat = {1, 5/4, 3/2, 15/8, 2}
-ampenv = maketable("line", 1000, 0, 0, 1, 1, 2,0)
-wave = maketable("wave", 1000, "sine")
+droneampenv = maketable("line", 1000, 0, 0, 1, 1, 2,0)
+dronewave = maketable("wave", 1000, "sine")
+droneamp = 2500
 start = irand(0,1)
 dur = irand(4.25, 4.5)
 curNote = 0

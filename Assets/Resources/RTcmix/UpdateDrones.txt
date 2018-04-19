@@ -4,12 +4,12 @@
 	bus_config("WAVETABLE", "aux 0 out")
 	curNote = curNote+trand(1, 2)
 	curNote = mod(curNote, len(chordb))
-	WAVETABLE(start, dur, 5000*ampenv, chordb[curNote], 0.5, wave)
+	WAVETABLE(start, dur, droneamp*droneampenv, chordb[curNote], 0.5, dronewave)
 	for(i = 0; i < cnum-1; i = i+1){
 		start = irand(0,1)
 		dur = irand(4.25, 4.5)
 
 		//index
-		WAVETABLE(start, dur, 5000*ampenv/cnum, chord1[trand(0, len(chord1))], 0.5, wave)
+		WAVETABLE(start, dur, droneamp*droneampenv/cnum, chord1[trand(0, len(chord1))], 0.5, dronewave)
 	}
 MAXBANG(irand(3, 4))

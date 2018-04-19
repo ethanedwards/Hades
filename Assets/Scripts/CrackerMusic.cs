@@ -16,11 +16,11 @@ public class CrackerMusic : MonoBehaviour {
 	float intensity;
 	bool changeLight;
 	Light lit;
-	private int baseNote;
+	public int baseNote;
 
 	// Use this for initialization
 	void Start () {
-		baseNote = Random.Range (80, 160);
+		//baseNote = Random.Range (80, 160);
 		resetter = Random.Range (0.1f, 1f);
 		changeLight = false;
 		resetTime = 0;

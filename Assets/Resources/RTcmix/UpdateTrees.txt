@@ -5,5 +5,5 @@
 
 		start1 = 0
 		dur1 = irand(0.3, 0.7)
-		WAVETABLE(start1, dur1, DIST*1000*ampenv1, scale[treepitch], 0, wave1)
+		WAVETABLE(start1, dur1, DIST*700*ampenv1, scale[treepitch], 0, wave1)
 MAXBANG(irand(1.0, 1.5))

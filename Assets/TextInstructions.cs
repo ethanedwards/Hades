@@ -31,8 +31,10 @@ public class TextInstructions : MonoBehaviour {
 		StartCoroutine (BeginElysium ());
 	}
 
-	public void Fade(){
-		StartCoroutine (FadeDown ());
+	public void Fade(bool first){
+		if (!first) {
+			StartCoroutine (FadeDown ());
+		}
 	}
 
 	IEnumerator Beginning()

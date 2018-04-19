@@ -34,6 +34,7 @@ namespace UnityEngine.XR.iOS
 		public bool Entrance = false;
 		public GameObject text;
 		public GameObject RTcmix;
+		public GameObject muse;
 		public Image fadeImage;
 
 
@@ -134,6 +135,8 @@ namespace UnityEngine.XR.iOS
 					Vector3 start = sceneRoot.transform.position;
 					if (Vector3.Distance (start, goal) > 0.1f) {
 						sceneRoot.transform.position = start + (goal - start).normalized / 40.0f;
+					} else {
+						sceneRoot.transform.position = start + (goal - start) / 3.0f;
 					}
 
 					if (Input.GetMouseButtonDown (0)) {
@@ -235,10 +238,10 @@ namespace UnityEngine.XR.iOS
 					if (hit.transform.tag == "Person"&&!narrating) {
 						Debug.Log ("narrate!");
 						hit.transform.GetComponent<Narrate> ().Play ();
-						if (!firstshade) {
-							text.GetComponent<TextInstructions> ().Fade ();
+						//if (!firstshade) {
+						text.GetComponent<TextInstructions> ().Fade (firstshade);
 							firstshade = true;
-						}
+						//}
 						if (testingScene) {
 							hit.transform.GetComponent<AudioSource> ().clip = testClip;
 						}
@@ -342,14 +345,15 @@ namespace UnityEngine.XR.iOS
 
 		}
 
-		IEnumerator BeginElysium()
+		IEnumerator BeginElysium(float wait)
 		{
-			yield return new WaitForSeconds(8.0f);
+			yield return new WaitForSeconds(wait);
 			Debug.Log ("Yo ELysium began");
 			Entrance = false;
 			//sceneRoot.SetActive (false);
 			RTcmix.SetActive(true);
 			crowd.SetActive (false);
+			sceneRoot.GetComponent<BoxCollider> ().enabled = false;
 			bloodStain.SetActive (false);
 			PersonParticle[] parts = crowd.GetComponentsInChildren<PersonParticle> ();
 			foreach (PersonParticle part in parts) {
@@ -421,11 +425,15 @@ namespace UnityEngine.XR.iOS
 
 			crowd.SetActive (true);
 
-			StartCoroutine(BeginElysium ());
+			float fadeDowntime = Mathf.Max(muse.GetComponent<AudioSource> ().clip.length - muse.GetComponent<AudioSource> ().time, 8.0f);
+			Debug.Log (fadeDowntime);
+			StartCoroutine(BeginElysium (fadeDowntime-1));
 			Debug.Log ("fade up");
-			StartCoroutine (FadeUp (4.0f));
+			float fadeUptime = Mathf.Max (fadeDowntime / 2.0f, 4.0f);
+			StartCoroutine (FadeUp (fadeUptime));
 			Debug.Log ("fade down");
-			StartCoroutine (FadeDown (9.0f));
+
+			StartCoroutine (FadeDown (fadeDowntime));
 		}
 	}
 }

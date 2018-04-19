@@ -1,4 +1,4 @@
-﻿Shader "Custom/Tranlucent" {
+﻿Shader "Custom/TransTreeTED" {
 Properties
     {
         _MainTex ("Albedo Texture", 2D) = "white" {}
@@ -9,6 +9,7 @@ Properties
         _Amplitude("Amplitude", Float) = 1
         _Speed ("Speed", Float) = 1
         _Amount("Amount", Range(0.0,1.0)) = 1
+        _Distance ("Distance", Float) = 1
     }
 
     SubShader
@@ -18,16 +19,17 @@ Properties
 
         ZWrite Off
         Blend SrcAlpha OneMinusSrcAlpha
-        Pass{
-			ColorMask 0
-		}
+
         Pass
         {
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
 
+
             #include "UnityCG.cginc"
+            //#include "SimplexNoise3D.hlsl"
+            #include "SimplexNoise2D.hlsl"
 
             struct appdata
             {
@@ -63,8 +65,14 @@ Properties
             fixed4 frag (v2f i) : SV_Target
             {
                 // sample the texture
-                fixed4 col = _TintColor;
+                fixed4 col = tex2D(_MainTex, i.uv) + _TintColor;
                 col.a = _Transparency;
+                col.a = 1.0-2*abs(0.5-i.uv.x)+1.0-2*abs(0.5-i.uv.y);
+                float2 seed;
+                float bob = _Time*2;
+                seed = float2(i.uv.x+bob, i.uv.y+bob);
+                col.a = snoise(seed);
+                //clip(col.r - _CutoutThresh);
                 return col;
             }
             ENDCG

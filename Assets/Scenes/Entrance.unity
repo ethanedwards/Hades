@@ -9870,7 +9870,7 @@ Prefab:
         type: 2}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: fbda0519552d145f1999738835d3cd1a, type: 3}
+      objectReference: {fileID: 8300000, guid: e3a56400c60c546a898f9dcb653f9822, type: 3}
     - target: {fileID: 114646731475576424, guid: d528a7d506f3b4840a4e0dd1ea7aad36,
         type: 2}
       propertyPath: color
@@ -10342,7 +10342,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 5000, y: 5000}
+  m_SizeDelta: {x: 7000, y: 7000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1184015047
 MonoBehaviour:
